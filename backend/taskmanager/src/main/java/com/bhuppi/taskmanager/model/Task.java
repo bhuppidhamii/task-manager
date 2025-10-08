@@ -1,23 +1,31 @@
 // src/main/java/com/bhuppi/taskmanager/model/Task.java
 package com.bhuppi.taskmanager.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Task {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String title;
+    private boolean done = false;
 
     public Task() {
     }
 
-    public Task(int id, String title) {
-        this.id = id;
+    public Task(String title) {
         this.title = title;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

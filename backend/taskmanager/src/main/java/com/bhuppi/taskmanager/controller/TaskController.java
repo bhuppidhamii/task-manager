@@ -1,6 +1,6 @@
-// src/main/java/com/bhuppi/taskmanager/controller/TaskController.java
 package com.bhuppi.taskmanager.controller;
 
+import com.bhuppi.taskmanager.repository.TaskRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -11,26 +11,24 @@ import com.bhuppi.taskmanager.model.Task;
 @RequestMapping("/tasks")
 @CrossOrigin(origins = "http://localhost:5173") // React runs here
 public class TaskController {
+    private final TaskRepository repo;
 
-    private List<Task> tasks = new ArrayList<>(List.of(
-            new Task(1, "Learn Spring Boot"),
-            new Task(2, "Build Task App")
-    ));
+    public TaskController(TaskRepository repo) {
+        this.repo = repo;
+    }
 
     @GetMapping
-    public List<Task> getTasks() {
-        return tasks;
+    public List<Task> getAll() {
+        return repo.findAll();
     }
 
     @PostMapping
-    public Task addTask(@RequestBody Task task) {
-        task.setId(tasks.size() + 1);
-        tasks.add(task);
-        return task;
+    public Task add(@RequestBody Task t) {
+        return repo.save(t);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTask(@PathVariable int id) {
-        tasks.removeIf(t -> t.getId() == id);
+    public void delete(@PathVariable Long id) {
+        repo.deleteById(id);
     }
 }

@@ -1,4 +1,7 @@
-package com.bhuppi.taskmanager.Repository;
+package com.bhuppi.taskmanager.repository;
 
-public class TaskRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.bhuppi.taskmanager.model.Task;
+
+public interface TaskRepository extends JpaRepository<Task, Long> {
 }
